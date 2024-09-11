@@ -12,7 +12,7 @@ global.path = require('path')
 global.appRoot = path.resolve(__dirname)
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/" + config.bd).then((respuesta)=>{
+mongoose.connect("mongodb://" + config.bdUser + ":" + config.bdPass + '@' + config.bdIp + ":" + config.bdPort +  "/" + config.bd).then((respuesta)=>{
     console.log("Conexion correcta a mongo")
 }).catch((error) => {
     console.log(error)
@@ -24,7 +24,7 @@ app.use(cors({
         console.log(origin)
         if(!origin) return callback(null, true)
         if(config.origins.indexOf(origin) === -1){
-            return callback('error cors', false)
+            return callback('Error cors origen no autorizado por favor agregar a lista de Origins', false)
         }
         return callback(null, true)
     }
